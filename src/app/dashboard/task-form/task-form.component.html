@@ -1,0 +1,48 @@
+<div mat-dialog-title>
+    <h1>{{data ? 'Update Task': 'Add Task'}}</h1>
+</div>
+<form [formGroup]="taskForm" (ngSubmit)="taskRegister()">
+    <div mat-dialog-content class="content">
+        <div class="row">
+            <mat-form-field appearance="outline">
+                <mat-label>Task Title</mat-label>
+                <input matInput placeholder="Ex. Shopping list" formControlName="title">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Description</mat-label>
+                <input matInput type="text" placeholder="Ex. apple, mango, grapes" formControlName="description">
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="outline">
+                <mat-label>Status</mat-label>
+                <select matNativeControl required formControlName="status">
+                  <option value="Pending">Pending</option>
+                  <option value="Working">Working</option>
+                  <option value="Completed">Completed</option>
+                </select>
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Priority</mat-label>
+                <select matNativeControl required formControlName="priority">
+                  <option value="Important">Important</option>
+                  <option value="Moderate">Moderate</option>
+                  <option value="Less Important">Less Important</option>
+                </select>
+              </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="outline">
+                <mat-label>Due Date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="dueDate">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+        </div>
+    </div>
+    <div mat-dialog-actions class="action">
+        <button mat-raised-button type="button" matDialogClose>Cancel</button>
+        <button mat-raised-button color="primary">{{data ? 'Update': 'Save'}}</button>
+    </div>
+</form>

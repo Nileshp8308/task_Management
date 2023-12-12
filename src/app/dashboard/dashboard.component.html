@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="row dash-card">
+        <div class="box">
+            <h3 style="color: #36b9cc;">Total</h3>
+            <p>{{total}}</p>
+        </div>
+        <div class="box mx-3">
+            <h3 style="color : #f6c23e">Pending</h3>
+            <p>{{pending}}</p>
+        </div>
+        <div class="box">
+            <h3 style="color: #4e73df;">Working</h3>
+            <p>{{working}}</p>
+        </div>
+        <div class="box mx-3">
+            <h3 style="color: #1cc88a;">Completed</h3>
+            <p>{{completed}}</p>
+        </div>
+    </div>
+    <div class="row chart-sect my-3">
+        <div id="chart">
+            <apx-chart
+              [series]="chartOptions.series"
+              [chart]="chartOptions.chart"
+              [dataLabels]="chartOptions.dataLabels"
+              [plotOptions]="chartOptions.plotOptions"
+              [yaxis]="chartOptions.yaxis"
+              [xaxis]="chartOptions.xaxis"
+              [legend]="chartOptions.legend"
+              [colors]="chartOptions.colors"
+              [grid]="chartOptions.grid"
+            ></apx-chart>
+          </div>
+          
+    </div>
+</div>

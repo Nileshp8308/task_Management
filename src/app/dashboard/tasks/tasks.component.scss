@@ -1,0 +1,22 @@
+.container {
+    width: 95vw;
+    position: relative;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+  }
+
+.main-body {
+    padding-top: 20px;
+    margin: 0 auto;
+    max-width: 1750px;
+
+    mat-form-field {
+        width: 100%;
+    }
+}
+
+.mat-mdc-cell.mdc-data-table__cell.cdk-cell.cdk-column-action.mat-column-action{
+    width: 9rem;
+}
