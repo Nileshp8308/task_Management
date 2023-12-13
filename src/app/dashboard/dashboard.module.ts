@@ -22,6 +22,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import { MatNativeDateModule } from "@angular/material/core";
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     MatDividerModule,
     MatNativeDateModule,
     ReactiveFormsModule,
-    NgApexchartsModule
+    NgApexchartsModule,
+    DragDropModule
   ]
 })
 export class DashboardModule { }

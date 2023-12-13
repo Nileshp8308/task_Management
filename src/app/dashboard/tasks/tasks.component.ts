@@ -2,11 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
 import { TaskFormComponent } from '../task-form/task-form.component';
 import { TaskService } from '../../services/task.service';
-
+import {CdkDragDrop, CdkDragStart, moveItemInArray, transferArrayItem, CdkDragHandle} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-tasks',
@@ -25,10 +25,14 @@ export class TasksComponent {
     'dueDate',
     'action'
   ];
-  dataSource!: MatTableDataSource<any>;
+  dataSource: any;
+  dragDisabled = true;
+
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild('table', { static: true }) table!: MatTable<any>;
+
 
   constructor(
     private dialog: MatDialog,
@@ -90,6 +94,17 @@ export class TasksComponent {
       console.log(completed)
       this.service.editTask({ ...data, status: 'Pending' })
     }
+  }
+
+  drop(event: any) {
+    // Return the drag container to disabled.
+    this.dragDisabled = true;
+
+    // const previousIndex = this.dataSource.findIndex((d:any) => d === event.item.data);
+
+    moveItemInArray(this.dataSource, event.previousIndex, event.currentIndex);
+    this.table.renderRows();
+
   }
 
 }
