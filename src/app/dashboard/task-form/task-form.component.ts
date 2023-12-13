@@ -7,10 +7,9 @@ import { TaskService } from '../../services/task.service';
 @Component({
   selector: 'app-task-form',
   templateUrl: './task-form.component.html',
-  styleUrl: './task-form.component.scss'
+  styleUrl: './task-form.component.scss',
 })
 export class TaskFormComponent {
-
   taskForm: FormGroup;
 
   constructor(
@@ -19,7 +18,6 @@ export class TaskFormComponent {
     private toastr: ToastrService,
     private dialog: MatDialogRef<TaskFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-
   ) {
     this.taskForm = this.builder.group({
       title: '',
@@ -27,26 +25,27 @@ export class TaskFormComponent {
       status: '',
       priority: '',
       dueDate: '',
-    })
+    });
   }
 
   ngOnInit(): void {
-    this.taskForm.patchValue(this.data)
+    this.taskForm.patchValue(this.data);
   }
 
   taskRegister() {
     if (this.taskForm.valid) {
       if (this.data) {
-        this.service.editTask({ ...this.taskForm.value, id: this.data.id })
-        this.toastr.success("Task Added Successfully")
-        this.dialog.close(true)
+        this.service.editTask({ ...this.taskForm.value, id: this.data.id });
+        this.toastr.success('Task Added Successfully');
+        this.dialog.close(true);
+        window.location.reload();
       } else {
-        console.log(this.taskForm.value)
-        this.service.addTask(this.taskForm.value)
-        this.toastr.success("Task Updated Successfully")
-        this.dialog.close(true)
+        console.log(this.taskForm.value);
+        this.service.addTask(this.taskForm.value);
+        this.toastr.success('Task Updated Successfully');
+        this.dialog.close(true);
+        window.location.reload();
       }
     }
   }
-
 }

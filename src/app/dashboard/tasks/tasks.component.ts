@@ -6,15 +6,20 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
 import { TaskFormComponent } from '../task-form/task-form.component';
 import { TaskService } from '../../services/task.service';
-import {CdkDragDrop, CdkDragStart, moveItemInArray, transferArrayItem, CdkDragHandle} from '@angular/cdk/drag-drop';
+import {
+  CdkDragDrop,
+  CdkDragStart,
+  moveItemInArray,
+  transferArrayItem,
+  CdkDragHandle,
+} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
-  styleUrl: './tasks.component.scss'
+  styleUrl: './tasks.component.scss',
 })
 export class TasksComponent {
-
   displayedColumns: string[] = [
     'check',
     'id',
@@ -23,33 +28,30 @@ export class TasksComponent {
     'status',
     'priority',
     'dueDate',
-    'action'
+    'action',
   ];
   dataSource: any;
   dragDisabled = true;
-
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild('table', { static: true }) table!: MatTable<any>;
 
-
   constructor(
     private dialog: MatDialog,
     private service: TaskService,
-    private toastr: ToastrService,
-
-  ) { }
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.getTaskList();
   }
 
   addTask() {
-    const dialogRef = this.dialog.open(TaskFormComponent)
+    const dialogRef = this.dialog.open(TaskFormComponent);
     dialogRef.afterClosed().subscribe((res: any) => {
-      console.log(res)
-    })
+      console.log(res);
+    });
   }
 
   getTaskList() {
@@ -59,7 +61,7 @@ export class TasksComponent {
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
       }
-    })
+    });
   }
 
   applyFilter(event: Event) {
@@ -72,8 +74,8 @@ export class TasksComponent {
   }
 
   deleteTask(id: number) {
-    this.service.deleteTask(id)
-    this.toastr.success("Task Deleted !")
+    this.service.deleteTask(id);
+    this.toastr.success('Task Deleted !');
   }
 
   openTaskForm(data: any) {
@@ -82,29 +84,38 @@ export class TasksComponent {
     });
 
     dialogRef.afterClosed().subscribe((res: any) => {
-      console.log(res)
-    })
+      console.log('check_truefalseed', res);
+      window.location.reload();
+    });
   }
 
   setAll(completed: boolean, data: any) {
     if (completed) {
-      this.service.editTask({ ...data, status: 'Completed' })
-      this.toastr.success("Task Completed !")
+      this.service.editTask({ ...data, status: 'Completed' });
+      this.toastr.success('Task Completed !');
     } else {
-      console.log(completed)
-      this.service.editTask({ ...data, status: 'Pending' })
+      console.log(completed);
+      this.service.editTask({ ...data, status: 'Pending' });
     }
   }
 
-  drop(event: any) {
+  // drop(event: CdkDragDrop<any>) {
+  //   const previousIndex = this.dataSource.data.findIndex(
+  //     (row: any) => row === event.item.data
+  //   );
+  //   moveItemInArray(this.dataSource.data, previousIndex, event.currentIndex);
+  //   this.table.renderRows();
+  // }
+
+  drop(event: CdkDragDrop<any>) {
     // Return the drag container to disabled.
     this.dragDisabled = true;
 
-    // const previousIndex = this.dataSource.findIndex((d:any) => d === event.item.data);
+    const previousIndex = this.dataSource.data.findIndex(
+      (d: any) => d === event.item.data
+    );
 
-    moveItemInArray(this.dataSource, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.dataSource.data, previousIndex, event.currentIndex);
     this.table.renderRows();
-
   }
-
 }
